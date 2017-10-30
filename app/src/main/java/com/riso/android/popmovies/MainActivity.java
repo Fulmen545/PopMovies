@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
         }*/
 
+       //tesst
+
        if (isOnline()) {
            FrameLayout frame = new FrameLayout(this);
            frame.setId(android.R.id.content);
