@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_bright"
+        android:textColor="@android:color/white"
+        android:textSize="45dp"
+        android:padding="27dp"
+        android:id="@+id/detail_title"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detail_title"
+        android:id="@+id/detail_poster"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_releaseDate"
+        android:layout_toRightOf="@+id/detail_poster"
+        android:layout_below="@+id/detail_title"
+        android:textSize="25dp"
+        android:padding="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_vote"
+        android:layout_toRightOf="@+id/detail_poster"
+        android:layout_below="@+id/detail_releaseDate"
+        android:textSize="18dp"
+        android:padding="5dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_overview"
+        android:layout_below="@+id/detail_poster"
+        android:textSize="15dp"
+        android:paddingLeft="20dp"
+        />
+    </RelativeLayout>
+    </ScrollView>
