@@ -25,16 +25,8 @@ public class HttpHandler {
     }
 
     public String makeServiceCall(URL url) throws IOException {
-        String response = null;
-//        URL url = new URL(reqUrl);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
-//            URL url = new URL(reqUrl);
-
-//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//            conn.setRequestMethod("GET");
-            // read the response
-//            InputStream in = new BufferedInputStream(conn.getInputStream());
             InputStream in = urlConnection.getInputStream();
 
             Scanner scanner = new Scanner(in);
@@ -46,18 +38,14 @@ public class HttpHandler {
             } else {
                 return null;
             }
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
         } catch (IOException e1) {
             e1.printStackTrace();
-
-//            response = convertStreamToString(in);
         } catch (Exception e) {
             Log.e(TAG, "Exception: " + e.getMessage());
         } finally {
         urlConnection.disconnect();
     }
-        return response;
+        return null;
     }
 
     private String convertStreamToString(InputStream is) {

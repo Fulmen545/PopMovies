@@ -43,12 +43,8 @@ public class MainActivityFragment extends android.support.v4.app.Fragment{
     private PopularMoviesAdapter moviesAdapter;
     private static final String TAG = "MyActivity";
     private GridView gridView;
-    private Context context;
-    public String orderMain;
 
     PopularMovies[] popularMovies;
-    PopularMoviesPopularity[] popularMoviesPopularities;
-
 
     @Override
     public void onPause() {
@@ -107,22 +103,6 @@ public class MainActivityFragment extends android.support.v4.app.Fragment{
 //        });
 //    }
 
-    public void orderByVote(){
-        List<PopularMovies> movieList = Arrays.asList(popularMovies);
-        Collections.sort(movieList);
-//            moviesAdapter =new PopularMoviesAdapter(getActivity(), Arrays.asList(popularMovies));
-        moviesAdapter =new PopularMoviesAdapter(getActivity(), movieList);
-        gridView.setAdapter(moviesAdapter);
-    }
-
-    public void orderByPopularity(PopularMovies[] array){
-        List<PopularMovies> movieList = Arrays.asList(array);
-        Collections.sort(movieList);
-//            moviesAdapter =new PopularMoviesAdapter(getActivity(), Arrays.asList(popularMovies));
-        moviesAdapter =new PopularMoviesAdapter(getActivity(), movieList);
-        gridView.setAdapter(moviesAdapter);
-    }
-
 
     private class GetMovies extends AsyncTask<Void, Void, Void>{
 
@@ -130,27 +110,22 @@ public class MainActivityFragment extends android.support.v4.app.Fragment{
         protected Void doInBackground(Void... params) {
             HttpHandler hh = new HttpHandler();
             String movieUrl = "http://api.themoviedb.org/3/movie/popular?api_key=76144fdd0b2185de9e0cff047fc6e2b6";
-//            URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery);
-            URL url = null;
+            URL url;
             String jsonStr = null;
             try {
                 url = new URL(movieUrl);
                 jsonStr = hh.makeServiceCall(url);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             PopularMovies movie;
-            PopularMoviesPopularity moviePopul;
 
             if (jsonStr!=null){
                 try{
                     JSONObject jsonObject = new JSONObject(jsonStr);
                     JSONArray movies = jsonObject.getJSONArray("results");
                     popularMovies = new PopularMovies[movies.length()];
-                    popularMoviesPopularities = new PopularMoviesPopularity[movies.length()];
                     for (int i=0;i<movies.length();i++){
                         JSONObject m = movies.getJSONObject(i);
                         String mtitle = m.getString("title");
@@ -161,13 +136,9 @@ public class MainActivityFragment extends android.support.v4.app.Fragment{
                         Double mpopularity = m.getDouble("popularity");
 
                         movie = new PopularMovies(mtitle, mposter, mploit, mrating, mdate, mpopularity);
-                        moviePopul = new PopularMoviesPopularity(mtitle, mposter, mploit, mrating, mdate, mpopularity);
                         popularMovies[i]=movie;
-                        popularMoviesPopularities[i]=moviePopul;
 
                     }
-//                    moviesAdapter =new PopularMoviesAdapter(getActivity(), Arrays.asList(popularMovies));
-//                    gridView.setAdapter(moviesAdapter);
 
 
                 } catch (JSONException e) {
@@ -181,12 +152,8 @@ public class MainActivityFragment extends android.support.v4.app.Fragment{
         protected void onPostExecute(Void aVoid) {
             List<PopularMovies> movieList = Arrays.asList(popularMovies);
             Collections.sort(movieList);
-//            moviesAdapter =new PopularMoviesAdapter(getActivity(), Arrays.asList(popularMovies));
             moviesAdapter =new PopularMoviesAdapter(getActivity(), movieList);
             gridView.setAdapter(moviesAdapter);
-//            if (aVoid==1){
-//                orderByVote();
-//            }
         }
     }
 

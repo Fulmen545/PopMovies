@@ -48,16 +48,7 @@ public class MainActivity extends AppCompatActivity {
                ft.add(android.R.id.content, newFragment).commit();
            }
        }else {
-           Log.w(TAG,"Something went wrong");
-           AlertDialog.Builder builder = new AlertDialog.Builder(this);
-           builder.setMessage("Please check your internet connection")
-                   .setTitle("No internet connection")
-                   .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                       public void onClick(DialogInterface dialog, int which) {
-                           dialog.dismiss();
-                       }
-                   })
-                   .show();
+           internetDialog();
        }
 
 
@@ -95,13 +86,18 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         MainActivityFragment maf = new MainActivityFragment();
         MainActivityFragmentPopularity map = new MainActivityFragmentPopularity();
-        Bundle bundle = new Bundle();
-        Intent intent = new Intent(this, MainActivity.class);
-        //noinspection SimplifiableIfStatement
         if (id == R.id.order_by_vote) {
-            changeTo(maf, android.R.id.content, "Vote");
+            if (isOnline()) {
+                changeTo(maf, android.R.id.content, "Vote");
+            } else {
+                internetDialog();
+            }
         } else if (id == R.id.order_by_popularity){
-            changeTo(map, android.R.id.content, "Popularity");
+            if (isOnline()){
+                changeTo(map, android.R.id.content, "Popularity");
+            } else {
+                internetDialog();
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -112,6 +108,19 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         fragmentManager.beginTransaction().replace(containerViewId, fragment).commit();
+    }
+
+    public void internetDialog(){
+        Log.w(TAG,"Something went wrong");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Please check your internet connection")
+                .setTitle("No internet connection")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
 

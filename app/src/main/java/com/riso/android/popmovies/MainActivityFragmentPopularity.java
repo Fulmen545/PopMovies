@@ -31,8 +31,6 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
     private PopularMoviesAdapterPopularity moviesAdapter;
     private static final String TAG = "MyActivity";
     private GridView gridView;
-    private Context context;
-    public String orderMain;
 
     PopularMoviesPopularity[] popularMovies;
 
@@ -48,7 +46,6 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         new GetMovies().execute();
-
 
         gridView = (GridView) rootView.findViewById(R.id.movies_grid);
         gridView.setAdapter(moviesAdapter);
@@ -71,39 +68,18 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
         return rootView;
     }
 
-
-    public void orderByVote(){
-        List<PopularMoviesPopularity> movieList = Arrays.asList(popularMovies);
-        Collections.sort(movieList);
-//            moviesAdapter =new PopularMoviesAdapter(getActivity(), Arrays.asList(popularMovies));
-        moviesAdapter =new PopularMoviesAdapterPopularity(getActivity(), movieList);
-        gridView.setAdapter(moviesAdapter);
-    }
-
-    public void orderByPopularity(PopularMoviesPopularity[] array){
-        List<PopularMoviesPopularity> movieList = Arrays.asList(array);
-        Collections.sort(movieList);
-//            moviesAdapter =new PopularMoviesAdapter(getActivity(), Arrays.asList(popularMovies));
-        moviesAdapter =new PopularMoviesAdapterPopularity(getActivity(), movieList);
-        gridView.setAdapter(moviesAdapter);
-    }
-
-
     private class GetMovies extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected Void doInBackground(Void... params) {
             HttpHandler hh = new HttpHandler();
             String movieUrl = "http://api.themoviedb.org/3/movie/popular?api_key=76144fdd0b2185de9e0cff047fc6e2b6";
-//            URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery);
-            URL url = null;
+            URL url;
             String jsonStr = null;
             try {
                 url = new URL(movieUrl);
                 jsonStr = hh.makeServiceCall(url);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            }  catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -139,12 +115,8 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
         protected void onPostExecute(Void aVoid) {
             List<PopularMoviesPopularity> movieList = Arrays.asList(popularMovies);
             Collections.sort(movieList);
-//            moviesAdapter =new PopularMoviesAdapter(getActivity(), Arrays.asList(popularMovies));
             moviesAdapter =new PopularMoviesAdapterPopularity(getActivity(), movieList);
             gridView.setAdapter(moviesAdapter);
-//            if (aVoid==1){
-//                orderByVote();
-//            }
         }
     }
 

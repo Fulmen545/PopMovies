@@ -28,7 +28,6 @@ public class DetailActivity extends AppCompatActivity {
     private TextView detailRelease;
     private TextView detailVote;
     private TextView detailOverView;
-    private String[] data = new String[5];
 
 
 
@@ -39,8 +38,6 @@ public class DetailActivity extends AppCompatActivity {
         Bundle getBundel = this.getIntent().getExtras();
         detailTitle = (TextView) findViewById(R.id.detail_title);
         detailTitle.setText(getBundel.getString("title"));
-//        detailTitle.setText("123456789012345678901234567890");
-//        detailTitle.setTextSize(getResources().getDimension(R.dimen.title_text_45));
         detailImage= (ImageView) findViewById(R.id.detail_poster);
         Picasso.with(this).load("http://image.tmdb.org/t/p/w342//"+ getBundel.getString("poster_path") )
                 .into(detailImage);
@@ -56,8 +53,6 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // this takes the user 'back', as if they pressed the left-facing triangle icon on the main android toolbar.
-                // if this doesn't work as desired, another possibility is to call `finish()` here.
                 this.onBackPressed();
                 return true;
             default:
