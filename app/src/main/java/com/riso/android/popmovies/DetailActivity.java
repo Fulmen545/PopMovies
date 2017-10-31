@@ -1,5 +1,6 @@
 package com.riso.android.popmovies;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.DrawableRes;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SpinnerAdapter;
@@ -27,6 +29,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView detailVote;
     private TextView detailOverView;
     private String[] data = new String[5];
+
 
 
     @Override
@@ -47,6 +50,19 @@ public class DetailActivity extends AppCompatActivity {
         detailVote.setText(getBundel.getString("vote_average")+"/10");
         detailOverView = (TextView) findViewById(R.id.detail_overview);
         detailOverView.setText(getBundel.getString("overview"));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // this takes the user 'back', as if they pressed the left-facing triangle icon on the main android toolbar.
+                // if this doesn't work as desired, another possibility is to call `finish()` here.
+                this.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

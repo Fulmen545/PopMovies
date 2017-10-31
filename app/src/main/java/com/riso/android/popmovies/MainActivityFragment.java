@@ -58,18 +58,17 @@ public class MainActivityFragment extends android.support.v4.app.Fragment{
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         new GetMovies().execute();
 
-
-        gridView = (GridView) rootView.findViewById(R.id.movies_grid);
+        gridView = (GridView) view.findViewById(R.id.movies_grid);
         gridView.setAdapter(moviesAdapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-               Log.i(TAG, "Position: " + popularMovies[position].title);
-                Intent intent = new Intent(inflater.getContext(), DetailActivity.class);
+                Log.i(TAG, "Position: " + popularMovies[position].title);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("title", popularMovies[position].title);
                 bundle.putString("poster_path", popularMovies[position].poster);
@@ -81,9 +80,32 @@ public class MainActivityFragment extends android.support.v4.app.Fragment{
             }
         });
 
-        return rootView;
+        return view;
     }
 
+//    @Override
+//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//        new GetMovies().execute();
+//
+//        gridView = (GridView) view.findViewById(R.id.movies_grid);
+//        gridView.setAdapter(moviesAdapter);
+//
+//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+//                Log.i(TAG, "Position: " + popularMovies[position].title);
+//                Intent intent = new Intent(getActivity(), DetailActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("title", popularMovies[position].title);
+//                bundle.putString("poster_path", popularMovies[position].poster);
+//                bundle.putString("overview", popularMovies[position].plot);
+//                bundle.putString("vote_average", popularMovies[position].rating.toString());
+//                bundle.putString("release_date", popularMovies[position].releaseDate.substring(0,4));
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//        });
+//    }
 
     public void orderByVote(){
         List<PopularMovies> movieList = Arrays.asList(popularMovies);

@@ -33,28 +33,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        new HostAvailabilityTask(this).execute("http://www.google.com");
-
-       /* Bundle bundle = new Bundle();
-        bundle.putString("order", "1");
-        MainActivityFragment maf = new MainActivityFragment();
-        maf.setArguments(bundle);
-        maf.setOrder("1");
-        if (isOnline()) {
-            setContentView(R.layout.activity_main);
-        } else {
-            Log.w(TAG,"Something went wrong");
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Please check your internet connection")
-                    .setTitle("No internet connection")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .show();
-
-        }*/
 
        if (isOnline()) {
            FrameLayout frame = new FrameLayout(this);
@@ -63,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
            if (savedInstanceState == null) {
-//            MainActivityFragment newFragment = new MainActivityFragment();
-               MainActivityFragmentPopularity newFragment = new MainActivityFragmentPopularity();
+            MainActivityFragment newFragment = new MainActivityFragment();
+//               MainActivityFragmentPopularity newFragment = new MainActivityFragmentPopularity();
                FragmentManager fragmentManager = getSupportFragmentManager();
                android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
                ft.add(android.R.id.content, newFragment).commit();
@@ -121,15 +99,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         //noinspection SimplifiableIfStatement
         if (id == R.id.order_by_vote) {
-            finish();
-            changeTo(maf, R.id.movies_grid, "Vote");
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.movies_grid, maf);
-//            fragmentTransaction.commit();
-
+            changeTo(maf, android.R.id.content, "Vote");
         } else if (id == R.id.order_by_popularity){
-            changeTo(map, R.id.movies_grid, "Popularity");
+            changeTo(map, android.R.id.content, "Popularity");
         }
 
         return super.onOptionsItemSelected(item);
