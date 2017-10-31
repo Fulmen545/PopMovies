@@ -1,38 +1,26 @@
 package com.riso.android.popmovies;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
-
-import java.lang.reflect.Array;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private TextView detailTitle;
-    private ImageView detailImage;
-    private TextView detailRelease;
-    private TextView detailVote;
-    private TextView detailOverView;
+
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TextView detailTitle;
+        ImageView detailImage;
+        TextView detailRelease;
+        TextView detailVote;
+        TextView detailOverView;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Bundle getBundel = this.getIntent().getExtras();

@@ -1,39 +1,25 @@
 package com.riso.android.popmovies;
 
-import android.annotation.TargetApi;
-import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by richard.janitor on 01-Oct-17.
@@ -44,7 +30,7 @@ public class MainActivityFragment extends android.support.v4.app.Fragment{
     private static final String TAG = "MyActivity";
     private GridView gridView;
 
-    PopularMovies[] popularMovies;
+    private PopularMovies[] popularMovies;
 
     @Override
     public void onPause() {

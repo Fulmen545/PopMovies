@@ -15,7 +15,7 @@ import java.util.List;
  * Created by richard.janitor on 01-Oct-17.
  */
 
-public class PopularMoviesAdapter extends ArrayAdapter<PopularMovies> {
+class PopularMoviesAdapter extends ArrayAdapter<PopularMovies> {
 
     public PopularMoviesAdapter(Activity context, List<PopularMovies> popularMovies) {
         super(context, 0, popularMovies);

@@ -1,14 +1,10 @@
 package com.riso.android.popmovies;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.nfc.Tag;
-import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -18,14 +14,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -54,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public boolean isOnline() {
+    private boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
@@ -88,13 +76,13 @@ public class MainActivity extends AppCompatActivity {
         MainActivityFragmentPopularity map = new MainActivityFragmentPopularity();
         if (id == R.id.order_by_vote) {
             if (isOnline()) {
-                changeTo(maf, android.R.id.content, "Vote");
+                changeTo(maf, android.R.id.content);
             } else {
                 internetDialog();
             }
         } else if (id == R.id.order_by_popularity){
             if (isOnline()){
-                changeTo(map, android.R.id.content, "Popularity");
+                changeTo(map, android.R.id.content);
             } else {
                 internetDialog();
             }
@@ -104,13 +92,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void changeTo(Fragment fragment, int containerViewId, String tag){
+    private void changeTo(Fragment fragment, int containerViewId){
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         fragmentManager.beginTransaction().replace(containerViewId, fragment).commit();
     }
 
-    public void internetDialog(){
+    private void internetDialog(){
         Log.w(TAG,"Something went wrong");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Please check your internet connection")

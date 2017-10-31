@@ -1,7 +1,5 @@
 package com.riso.android.popmovies;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,7 +15,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,7 +29,7 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
     private static final String TAG = "MyActivity";
     private GridView gridView;
 
-    PopularMoviesPopularity[] popularMovies;
+    private PopularMoviesPopularity[] popularMovies;
 
     @Override
     public void onPause() {

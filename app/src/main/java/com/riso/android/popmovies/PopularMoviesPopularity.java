@@ -6,14 +6,14 @@ import android.support.annotation.NonNull;
  * Created by richard.janitor on 01-Oct-17.
  */
 
-public class PopularMoviesPopularity implements Comparable<PopularMoviesPopularity>{
+class PopularMoviesPopularity implements Comparable<PopularMoviesPopularity>{
 
-    String title;
-    String poster;
-    String plot;
-    Double rating;
-    String releaseDate;
-    Double popularity;
+    final String title;
+    final String poster;
+    final String plot;
+    final Double rating;
+    final String releaseDate;
+    final Double popularity;
 
     public PopularMoviesPopularity(String title, String poster, String plot,
                                    Double rating, String releaseDate, Double popularity){
@@ -23,10 +23,6 @@ public class PopularMoviesPopularity implements Comparable<PopularMoviesPopulari
         this.rating=rating;
         this.releaseDate=releaseDate;
         this.popularity=popularity;
-    }
-
-    public Double getPopularity(){
-        return popularity;
     }
 
     @Override
