@@ -56,7 +56,7 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
                 bundle.putString("poster_path", popularMovies[position].poster);
                 bundle.putString("overview", popularMovies[position].plot);
                 bundle.putString("vote_average", popularMovies[position].rating.toString());
-                bundle.putString("release_date", popularMovies[position].releaseDate.substring(0,4));
+                bundle.putString("release_date", popularMovies[position].releaseDate);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -70,7 +70,7 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
         @Override
         protected Void doInBackground(Void... params) {
             HttpHandler hh = new HttpHandler();
-            String movieUrl = "http://api.themoviedb.org/3/movie/popular?api_key=76144fdd0b2185de9e0cff047fc6e2b6";
+            String movieUrl = "http://api.themoviedb.org/3/movie/popular?api_key=" + BuildConfig.THE_MOVIE_DB_API_TOKEN;
             URL url;
             String jsonStr = null;
             try {
