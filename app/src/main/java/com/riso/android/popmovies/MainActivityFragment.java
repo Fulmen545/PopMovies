@@ -95,7 +95,7 @@ public class MainActivityFragment extends android.support.v4.app.Fragment{
         @Override
         protected Void doInBackground(Void... params) {
             HttpHandler hh = new HttpHandler();
-            String movieUrl = "http://api.themoviedb.org/3/movie/popular?api_key=" + BuildConfig.THE_MOVIE_DB_API_TOKEN;
+            String movieUrl = "http://api.themoviedb.org/3/movie/top_rated?api_key=" + BuildConfig.THE_MOVIE_DB_API_TOKEN;
             URL url;
             String jsonStr = null;
             try {
@@ -137,7 +137,7 @@ public class MainActivityFragment extends android.support.v4.app.Fragment{
         @Override
         protected void onPostExecute(Void aVoid) {
             List<PopularMovies> movieList = Arrays.asList(popularMovies);
-            Collections.sort(movieList);
+//            Collections.sort(movieList);
             moviesAdapter =new PopularMoviesAdapter(getActivity(), movieList);
             gridView.setAdapter(moviesAdapter);
         }

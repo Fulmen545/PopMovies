@@ -1,58 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:layout_height="match_parent">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_bright"
-        android:textColor="@android:color/white"
-        android:textSize="45sp"
-        android:padding="27dp"
-        android:id="@+id/detail_title"
-        />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/detail_title"
-        android:id="@+id/detail_poster"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="20dp"
-        android:contentDescription="@string/poster"
-        />
+        <TextView
+            android:id="@+id/detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_bright"
+            android:padding="27dp"
+            android:textColor="@android:color/white"
+            android:textSize="45sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_releaseDate"
-        android:layout_toEndOf="@+id/detail_poster"
-        android:layout_below="@+id/detail_title"
-        android:textSize="25sp"
-        android:padding="5dp"/>
+        <ImageView
+            android:id="@+id/detail_poster"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detail_title"
+            android:contentDescription="@string/poster"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_vote"
-        android:layout_toEndOf="@+id/detail_poster"
-        android:layout_below="@+id/detail_releaseDate"
-        android:textSize="18sp"
-        android:padding="5dp"
-        />
+        <TextView
+            android:id="@+id/detail_releaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detail_title"
+            android:layout_toEndOf="@+id/detail_poster"
+            android:padding="5dp"
+            android:textSize="25sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_overview"
-        android:layout_below="@+id/detail_poster"
-        android:textSize="15sp"
-        android:paddingStart="20dp"
-        />
+        <TextView
+            android:id="@+id/detail_vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detail_releaseDate"
+            android:layout_toEndOf="@+id/detail_poster"
+            android:padding="5dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/detail_overview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detail_poster"
+            android:paddingStart="20dp"
+            android:textSize="15sp" />
     </RelativeLayout>
-    </ScrollView>
+</ScrollView>

@@ -111,7 +111,7 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
         @Override
         protected void onPostExecute(Void aVoid) {
             List<PopularMoviesPopularity> movieList = Arrays.asList(popularMovies);
-            Collections.sort(movieList);
+//            Collections.sort(movieList);
             moviesAdapter =new PopularMoviesAdapterPopularity(getActivity(), movieList);
             gridView.setAdapter(moviesAdapter);
         }
