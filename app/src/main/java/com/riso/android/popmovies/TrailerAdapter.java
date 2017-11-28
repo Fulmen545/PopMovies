@@ -19,9 +19,9 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     private static final String TAG = TrailerAdapter.class.getSimpleName();
     final private ListItemClickListener mOnClickListener;
 
-    private List<String> mTrailerItems;
+    private List<TrailerUrl> mTrailerItems;
 
-    public TrailerAdapter(List<String> trailerNames, ListItemClickListener mOnClickListener) {
+    public TrailerAdapter(List<TrailerUrl> trailerNames, ListItemClickListener mOnClickListener) {
         this.mOnClickListener = mOnClickListener;
         mTrailerItems = trailerNames;
     }
@@ -66,7 +66,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         }
 
         void bind(int listIndex){
-            listItemView.setText(mTrailerItems.get(listIndex));
+            listItemView.setText(mTrailerItems.get(listIndex).name);
         }
 
 

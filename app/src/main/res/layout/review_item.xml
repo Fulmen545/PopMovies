@@ -16,21 +16,28 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical|start"
-            android:contentDescription="Play icon"
-            android:src="@drawable/play" />
+            android:contentDescription="Review icon"
+            android:src="@drawable/speech" />
 
         <TextView
-            android:id="@+id/tv_view_holder_instance"
-            style="@style/TextAppearance.AppCompat.Title"
+            android:id="@+id/tv_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
-            android:fontFamily="monospace"
             android:paddingEnd="15dp"
             android:paddingStart="15dp"
-            android:textColor="#000"
             tools:text="ViewHolderf sfafdas e: 7" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/author"
+        tools:text="Author: Jozko"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:layout_gravity="center_vertical|end"
+        />
 
     <View
         android:layout_width="match_parent"
