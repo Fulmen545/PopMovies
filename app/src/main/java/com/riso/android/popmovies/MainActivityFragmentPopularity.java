@@ -3,6 +3,7 @@ package com.riso.android.popmovies;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +26,11 @@ import java.util.List;
  */
 
 public class MainActivityFragmentPopularity extends android.support.v4.app.Fragment{
-    private PopularMoviesAdapterPopularity moviesAdapter;
+    private PopularMoviesAdapter moviesAdapter;
     private static final String TAG = "MyActivity";
     private GridView gridView;
 
-    private PopularMoviesPopularity[] popularMovies;
+    private PopularMovies[] popularMovies;
 
     @Override
     public void onPause() {
@@ -42,16 +43,24 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         new GetMovies().execute();
 
-        gridView = (GridView) rootView.findViewById(R.id.movies_grid);
+        gridView = (GridView) view.findViewById(R.id.movies_grid);
         gridView.setAdapter(moviesAdapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-               Log.i(TAG, "Position: " + popularMovies[position].title);
-                Intent intent = new Intent(inflater.getContext(), DetailActivity.class);
+                Log.i(TAG, "Position: " + popularMovies[position].title);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putString("id", popularMovies[position].movieId);
                 bundle.putString("title", popularMovies[position].title);
                 bundle.putString("poster_path", popularMovies[position].poster);
                 bundle.putString("overview", popularMovies[position].plot);
@@ -61,8 +70,6 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
                 startActivity(intent);
             }
         });
-
-        return rootView;
     }
 
     private class GetMovies extends AsyncTask<Void, Void, Void>{
@@ -80,15 +87,16 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
                 e.printStackTrace();
             }
 
-            PopularMoviesPopularity movie;
+            PopularMovies movie;
 
             if (jsonStr!=null){
                 try{
                     JSONObject jsonObject = new JSONObject(jsonStr);
                     JSONArray movies = jsonObject.getJSONArray("results");
-                    popularMovies = new PopularMoviesPopularity[movies.length()];
+                    popularMovies = new PopularMovies[movies.length()];
                     for (int i=0;i<movies.length();i++){
                         JSONObject m = movies.getJSONObject(i);
+                        String mmovieId = m.getString("id");
                         String mtitle = m.getString("title");
                         String mposter = m.getString("poster_path");
                         String mploit = m.getString("overview");
@@ -96,7 +104,7 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
                         String mdate = m.getString("release_date");
                         Double mpopularity = m.getDouble("popularity");
 
-                        movie = new PopularMoviesPopularity(mtitle, mposter, mploit, mrating, mdate, mpopularity);
+                        movie = new PopularMovies(mmovieId, mtitle, mposter, mploit, mrating, mdate, mpopularity);
                         popularMovies[i]=movie;
 
                     }
@@ -110,9 +118,9 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            List<PopularMoviesPopularity> movieList = Arrays.asList(popularMovies);
+            List<PopularMovies> movieList = Arrays.asList(popularMovies);
 //            Collections.sort(movieList);
-            moviesAdapter =new PopularMoviesAdapterPopularity(getActivity(), movieList);
+            moviesAdapter =new PopularMoviesAdapter(getActivity(), movieList);
             gridView.setAdapter(moviesAdapter);
         }
     }

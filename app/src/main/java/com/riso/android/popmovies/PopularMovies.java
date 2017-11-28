@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 
 class PopularMovies implements Comparable<PopularMovies>{
 
+    final String movieId;
     final String title;
     final String poster;
     final String plot;
@@ -15,8 +16,9 @@ class PopularMovies implements Comparable<PopularMovies>{
     final String releaseDate;
     final Double popularity;
 
-    public PopularMovies(String title, String poster, String plot,
+    public PopularMovies(String movieId, String title, String poster, String plot,
                          Double rating, String releaseDate, Double popularity){
+        this.movieId=movieId;
         this.title=title;
         this.poster=poster;
         this.plot=plot;

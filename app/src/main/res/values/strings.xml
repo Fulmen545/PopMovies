@@ -3,5 +3,6 @@
     <string name="vote">Order by Vote</string>
     <string name="popularity">Order by Popularity</string>
     <string name="poster">Movie poster</string>
+    <string name="trailers">Trailers:</string>
     <string name="title_activity_detail">Movie Detail</string>
 </resources>
