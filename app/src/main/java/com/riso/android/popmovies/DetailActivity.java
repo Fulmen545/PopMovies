@@ -1,7 +1,10 @@
 package com.riso.android.popmovies;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
@@ -11,10 +14,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.riso.android.popmovies.data.FavoriteMovies;
+import com.riso.android.popmovies.data.FavoritesDbHelper;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -35,9 +40,21 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
     private TrailerAdapter mAdapterTrailers;
     private RecyclerView mReviewList;
     private ReviewAdapter mAdapterReviews;
-    public Toast mToast;
     private TrailerUrl[] trailers;
     private ReviewUrl[] reviews;
+    private boolean favorite = false;
+    private ImageView star;
+    private TextView star_label;
+    private SQLiteDatabase mDb;
+    private String sMovieId;
+    private String sTitle;
+    private String sPoster;
+    private String sDate;
+    private String sVote;
+    private String sPolt;
+    private String sPopularity;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,32 +63,48 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         TextView detailRelease;
         TextView detailVote;
         TextView detailOverView;
-        String movieId;
-//        trailers.add("Trailer1");
-//        trailers.add("Trailer2");
-//        trailers.add("Trailer3");
+        FavoritesDbHelper dbHelper = new FavoritesDbHelper(this);
+        mDb = dbHelper.getWritableDatabase();
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        star = (ImageView) findViewById(R.id.star);
+        star_label = (TextView) findViewById(R.id.star_label);
+
+        star_label.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                favorite();
+            }
+        });
+        star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                favorite();
+            }
+        });
 
         Bundle getBundel = this.getIntent().getExtras();
         if (getBundel != null) {
-            movieId = getBundel.getString("id");
-            new GetTrailers().execute(movieId);
-            new GetReviews().execute(movieId);
+            bundelToStrings(getBundel);
+            favorite=isFavorite();
+            setFavoriteStyle();
+            new GetTrailers().execute(sMovieId);
+            new GetReviews().execute(sMovieId);
             detailTitle = (TextView) findViewById(R.id.detail_title);
-            detailTitle.setText(getBundel.getString("title"));
+            detailTitle.setText(sTitle);
             detailImage = (ImageView) findViewById(R.id.detail_poster);
-            Picasso.with(this).load("http://image.tmdb.org/t/p/w342//" + getBundel.getString("poster_path"))
+            Picasso.with(this).load("http://image.tmdb.org/t/p/w342//" + sPoster)
                     .placeholder(R.drawable.noimage)
                     .error(R.drawable.noimage)
                     .into(detailImage);
             detailRelease = (TextView) findViewById(R.id.detail_releaseDate);
-            detailRelease.setText(dateFormatter(getBundel.getString("release_date")));
+            detailRelease.setText(sDate);
             detailVote = (TextView) findViewById(R.id.detail_vote);
-            detailVote.setText(getBundel.getString("vote_average") + "/10");
+            detailVote.setText(sVote + "/10");
             detailOverView = (TextView) findViewById(R.id.detail_overview);
-            detailOverView.setText(getBundel.getString("overview"));
+            detailOverView.setText(sPolt);
 
             mTrailerList = (RecyclerView) findViewById(R.id.rv_trailers);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -94,6 +127,16 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void  bundelToStrings(Bundle bundle){
+        sMovieId = bundle.getString("id");
+        sTitle = bundle.getString("title");
+        sPoster = bundle.getString("poster_path");
+        sDate = dateFormatter(bundle.getString("release_date"));
+        sVote = bundle.getString("vote_average");
+        sPolt = bundle.getString("overview");
+        sPopularity = Double.toString(bundle.getDouble("popularity"));
     }
 
     private String dateFormatter(String date) {
@@ -121,12 +164,86 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
                 .show();
     }
 
+    public void setFavoriteStyle() {
+        if (favorite) {
+            star.setImageResource(R.drawable.ic_star_blue);
+            star_label.setText("In Favorites");
+            star_label.setTextColor(getResources().getColor(R.color.holo_blue_bright));
+        } else {
+            star.setImageResource(R.drawable.ic_star_grey);
+            star_label.setText("Put in Favorites");
+            star_label.setTextColor(getResources().getColor(R.color.darker_gray));
+        }
+    }
+
+    public void favorite() {
+        if (favorite) {
+            favorite = false;
+            removeFromFavorites();
+        } else {
+            favorite = true;
+            addToFavorites(sMovieId, sTitle, sPoster, sPolt, sVote, sDate, sPopularity);
+        }
+        setFavoriteStyle();
+        Log.i(TAG, "RISOTEST: " + favorite);
+    }
+
+    private long addToFavorites(String movieId, String title, String poster,
+                                String plot, String rating, String date, String popularity) {
+        ContentValues cv = new ContentValues();
+        cv.put(FavoriteMovies.FavoriteEntry.MOVIE_ID, movieId);
+        cv.put(FavoriteMovies.FavoriteEntry.TITLE, title);
+        cv.put(FavoriteMovies.FavoriteEntry.POSTER, poster);
+        cv.put(FavoriteMovies.FavoriteEntry.PLOT, plot);
+        cv.put(FavoriteMovies.FavoriteEntry.RATING, rating);
+        cv.put(FavoriteMovies.FavoriteEntry.RELEASE_DATE, date);
+        cv.put(FavoriteMovies.FavoriteEntry.POPULARITY, popularity);
+        return mDb.insert(FavoriteMovies.FavoriteEntry.TABLE_NAME, null, cv);
+    }
+
+    private boolean removeFromFavorites (){
+        return mDb.delete(FavoriteMovies.FavoriteEntry.TABLE_NAME,
+                FavoriteMovies.FavoriteEntry.MOVIE_ID +"="+ sMovieId, null)>0;
+    }
+
+    private boolean isFavorite() {
+//        Cursor cursor = mDb.query(
+//                FavoriteMovies.FavoriteEntry.TABLE_NAME,
+//                null,
+//                FavoriteMovies.FavoriteEntry.MOVIE_ID +"=?",
+//                new String[] {sMovieId},
+//                null,
+//                null,
+//                null
+//        );
+        String[] whereArgs = new String[] {
+                sMovieId
+        };
+        String query = "Select * from " + FavoriteMovies.FavoriteEntry.TABLE_NAME +
+                " where " + FavoriteMovies.FavoriteEntry.MOVIE_ID + " = ?";
+        Cursor cursor = mDb.rawQuery(query, whereArgs);
+//        String name = cursor.getString(cursor.getColumnIndex(FavoriteMovies.FavoriteEntry.TITLE));
+        if (!cursor.moveToNext()) {
+            return false;
+        } else {
+            if (cursor.moveToFirst()){
+                do{
+                    String name = cursor.getString(cursor.getColumnIndex(FavoriteMovies.FavoriteEntry.TITLE));
+                    // do what ever you want here
+                }while(cursor.moveToNext());
+            }
+            cursor.close();
+//            String name = cursor.getString(cursor.getColumnIndex(FavoriteMovies.FavoriteEntry.TITLE));
+            return true;
+        }
+    }
+
 
     @Override
     public void onListItemClick(int listItem) {
         Uri youtubeUrl = Uri.parse("https://www.youtube.com/watch?v=" + trailers[listItem].source);
         Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, youtubeUrl);
-        if (youtubeIntent.resolveActivity(getPackageManager())!=null){
+        if (youtubeIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(youtubeIntent);
         }
     }

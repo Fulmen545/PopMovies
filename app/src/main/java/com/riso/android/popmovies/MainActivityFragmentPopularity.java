@@ -66,6 +66,7 @@ public class MainActivityFragmentPopularity extends android.support.v4.app.Fragm
                 bundle.putString("overview", popularMovies[position].plot);
                 bundle.putString("vote_average", popularMovies[position].rating.toString());
                 bundle.putString("release_date", popularMovies[position].releaseDate);
+                bundle.putDouble("popularity",popularMovies[position].popularity);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

@@ -86,6 +86,12 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 internetDialog();
             }
+        } else if (id == R.id.order_by_favorite){
+            if (isOnline()){
+//                changeTo(map, android.R.id.content);
+            } else {
+                internetDialog();
+            }
         }
 
         return super.onOptionsItemSelected(item);

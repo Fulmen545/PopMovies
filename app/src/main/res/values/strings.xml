@@ -2,6 +2,7 @@
     <string name="app_name">Popular Movies</string>
     <string name="vote">Order by Vote</string>
     <string name="popularity">Order by Popularity</string>
+    <string name="favorite">Favorites</string>
     <string name="poster">Movie poster</string>
     <string name="trailers">Trailers:</string>
     <string name="reviews">Reviews:</string>
