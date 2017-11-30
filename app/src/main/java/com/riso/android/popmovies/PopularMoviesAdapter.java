@@ -32,6 +32,8 @@ class PopularMoviesAdapter extends ArrayAdapter<PopularMovies> {
 
         ImageView iconView = (ImageView) convertView.findViewById(R.id.movie_image);
         Picasso.with(getContext()).load("http://image.tmdb.org/t/p/w500/"+ popularMovies.poster)
+                .placeholder(R.drawable.noimage)
+                .error(R.drawable.noimage)
                 .into(iconView);
 
         return convertView;

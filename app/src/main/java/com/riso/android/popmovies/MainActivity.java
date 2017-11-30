@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        FavoritesFragment faf = new FavoritesFragment();
         MainActivityFragment maf = new MainActivityFragment();
         MainActivityFragmentPopularity map = new MainActivityFragmentPopularity();
         if (id == R.id.order_by_vote) {
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if (id == R.id.order_by_favorite){
             if (isOnline()){
-//                changeTo(map, android.R.id.content);
+                changeTo(faf, android.R.id.content);
             } else {
                 internetDialog();
             }
