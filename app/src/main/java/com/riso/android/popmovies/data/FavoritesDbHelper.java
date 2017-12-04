@@ -33,6 +33,7 @@ public class FavoritesDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_WAITLIST_TABLE);
     }
 
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + FavoriteMovies.FavoriteEntry.TABLE_NAME);

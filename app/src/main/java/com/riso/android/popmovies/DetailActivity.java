@@ -188,7 +188,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         Log.i(TAG, "RISOTEST: " + favorite);
     }
 
-    private long addToFavorites(String movieId, String title, String poster,
+    private void addToFavorites(String movieId, String title, String poster,
                                 String plot, String rating, String date, String popularity) {
         ContentValues cv = new ContentValues();
         cv.put(FavoriteMovies.FavoriteEntry.MOVIE_ID, movieId);
@@ -198,12 +198,14 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         cv.put(FavoriteMovies.FavoriteEntry.RATING, rating);
         cv.put(FavoriteMovies.FavoriteEntry.RELEASE_DATE, date);
         cv.put(FavoriteMovies.FavoriteEntry.POPULARITY, popularity);
-        return mDb.insert(FavoriteMovies.FavoriteEntry.TABLE_NAME, null, cv);
+        getContentResolver().insert(FavoriteMovies.FavoriteEntry.CONTENT_URI,cv);
+//        return mDb.insert(FavoriteMovies.FavoriteEntry.TABLE_NAME, null, cv);
     }
 
-    private boolean removeFromFavorites (){
-        return mDb.delete(FavoriteMovies.FavoriteEntry.TABLE_NAME,
-                FavoriteMovies.FavoriteEntry.MOVIE_ID +"="+ sMovieId, null)>0;
+    private void removeFromFavorites (){
+        getContentResolver().delete(FavoriteMovies.FavoriteEntry.CONTENT_URI, FavoriteMovies.FavoriteEntry.MOVIE_ID + "= ?", new String[]{sMovieId});
+//        return mDb.delete(FavoriteMovies.FavoriteEntry.TABLE_NAME,
+//                FavoriteMovies.FavoriteEntry.MOVIE_ID +"="+ sMovieId, null)>0;
     }
 
     private boolean isFavorite() {
