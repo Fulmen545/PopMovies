@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
            if (savedInstanceState == null) {
             MainActivityFragment newFragment = new MainActivityFragment();
-//               MainActivityFragmentPopularity newFragment = new MainActivityFragmentPopularity();
                FragmentManager fragmentManager = getSupportFragmentManager();
                android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
                ft.add(android.R.id.content, newFragment).commit();
@@ -117,6 +116,4 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .show();
     }
-
-
 }

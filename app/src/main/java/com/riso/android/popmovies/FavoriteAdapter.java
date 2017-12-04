@@ -2,14 +2,12 @@ package com.riso.android.popmovies;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.riso.android.popmovies.data.FavoriteMovies;
 import com.squareup.picasso.Picasso;

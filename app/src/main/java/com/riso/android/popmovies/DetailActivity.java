@@ -199,43 +199,26 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         cv.put(FavoriteMovies.FavoriteEntry.RELEASE_DATE, date);
         cv.put(FavoriteMovies.FavoriteEntry.POPULARITY, popularity);
         getContentResolver().insert(FavoriteMovies.FavoriteEntry.CONTENT_URI,cv);
-//        return mDb.insert(FavoriteMovies.FavoriteEntry.TABLE_NAME, null, cv);
     }
 
     private void removeFromFavorites (){
-        getContentResolver().delete(FavoriteMovies.FavoriteEntry.CONTENT_URI, FavoriteMovies.FavoriteEntry.MOVIE_ID + "= ?", new String[]{sMovieId});
-//        return mDb.delete(FavoriteMovies.FavoriteEntry.TABLE_NAME,
-//                FavoriteMovies.FavoriteEntry.MOVIE_ID +"="+ sMovieId, null)>0;
+        getContentResolver().delete(FavoriteMovies.FavoriteEntry.CONTENT_URI,
+                FavoriteMovies.FavoriteEntry.MOVIE_ID + "= ?", new String[]{sMovieId});
     }
 
     private boolean isFavorite() {
-//        Cursor cursor = mDb.query(
-//                FavoriteMovies.FavoriteEntry.TABLE_NAME,
-//                null,
-//                FavoriteMovies.FavoriteEntry.MOVIE_ID +"=?",
-//                new String[] {sMovieId},
-//                null,
-//                null,
-//                null
-//        );
-        String[] whereArgs = new String[] {
-                sMovieId
-        };
-        String query = "Select * from " + FavoriteMovies.FavoriteEntry.TABLE_NAME +
-                " where " + FavoriteMovies.FavoriteEntry.MOVIE_ID + " = ?";
-        Cursor cursor = mDb.rawQuery(query, whereArgs);
-//        String name = cursor.getString(cursor.getColumnIndex(FavoriteMovies.FavoriteEntry.TITLE));
+        Cursor cursor = mDb.query(
+                FavoriteMovies.FavoriteEntry.TABLE_NAME,
+                null,
+                FavoriteMovies.FavoriteEntry.MOVIE_ID +"=?",
+                new String[] {sMovieId},
+                null,
+                null,
+                null
+        );
         if (!cursor.moveToNext()) {
             return false;
         } else {
-            if (cursor.moveToFirst()){
-                do{
-                    String name = cursor.getString(cursor.getColumnIndex(FavoriteMovies.FavoriteEntry.TITLE));
-                    // do what ever you want here
-                }while(cursor.moveToNext());
-            }
-            cursor.close();
-//            String name = cursor.getString(cursor.getColumnIndex(FavoriteMovies.FavoriteEntry.TITLE));
             return true;
         }
     }
